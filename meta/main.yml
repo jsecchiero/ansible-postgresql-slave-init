@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Jacopo Secchiero
+  description: Prepare a postgresql slave to join into a postgresql cluster
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu
+      versions:
+      - 16.04
+
+  galaxy_tags: []
+
+dependencies: []
