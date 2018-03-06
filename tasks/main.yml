@@ -4,7 +4,7 @@
   file:
     path: "{{ postgresql_conf }}"
     state: directory
-    recurse: yes
+    recurse: 'True'
 
 - name: install postgresql-client-9.5
   package: name=postgresql-client-9.5
@@ -14,12 +14,18 @@
     path: /root/.pgpass
     regexp: ^"{{ item }}"
     line: "{{ item }}"
-    create: yes
+    create: 'True'
     mode: 0400
   with_items:
-    - "{{ postgresql_master }}:5432:replication:{{ postgresql_replica_user }}:{{ postgresql_replica_password }}"
+    - >
+    "{{ postgresql_master }}:5432:replication:
+    {{ postgresql_replica_user }}:
+    {{ postgresql_replica_password }}"
 - name: create a copy from master
-  command: "pg_basebackup -h {{ postgresql_master }} -D {{ postgresql_data }} -U {{ postgresql_replica_user }} -v -P -R -Xs"
+  command: >
+    "pg_basebackup -h {{ postgresql_master }}
+     -D {{ postgresql_data }} -U {{ postgresql_replica_user }}
+     -v -P -R -Xs"
   args:
     creates: /var/lib/postgresql
   notify:
@@ -33,7 +39,10 @@
     create: yes
   with_items:
     - standby_mode = on
-    - primary_conninfo = 'host={{ postgresql_master }} port=5432 user={{ postgresql_replica_user }} password={{ postgresql_replica_password }}'
+    - >
+    primary_conninfo = 'host={{ postgresql_master }}
+     port=5432 user={{ postgresql_replica_user }}
+     password={{ postgresql_replica_password }}'
     - restore_command = 'cp /var/lib/postgresql/9.5/main/archive/%f %p'
     - trigger_file = '/tmp/postgresql.trigger.5432'
 
@@ -52,7 +61,7 @@
     path: "{{ item }}"
     owner: postgres
     group: postgres
-    recurse: yes
+    recurse: 'True'
   with_items:
     - /var/lib/postgresql
     - /etc/postgresql
