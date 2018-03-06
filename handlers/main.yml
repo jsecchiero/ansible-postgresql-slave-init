@@ -1,0 +1,4 @@
+---
+
+- name: copy conf
+  copy: src=etc_postgresql/ dest="{{ postgresql_conf }}"

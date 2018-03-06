@@ -1,0 +1,6 @@
+postgresql_master: ""
+postgresql_version: 9.5
+postgresql_data: /var/lib/postgresql/{{ postgresql_version }}/main
+postgresql_conf: /etc/postgresql/{{ postgresql_version }}/main
+postgresql_replica_user: replica
+postgresql_replica_password: yoursupersecretpassword
