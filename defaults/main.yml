@@ -1,3 +1,4 @@
+---
 postgresql_master: ""
 postgresql_version: 9.5
 postgresql_data: /var/lib/postgresql/{{ postgresql_version }}/main

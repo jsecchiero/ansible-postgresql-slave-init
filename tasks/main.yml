@@ -18,9 +18,9 @@
     mode: 0400
   with_items:
     - >
-    "{{ postgresql_master }}:5432:replication:
-    {{ postgresql_replica_user }}:
-    {{ postgresql_replica_password }}"
+      "{{ postgresql_master }}:5432:replication:
+      {{ postgresql_replica_user }}:
+      {{ postgresql_replica_password }}"
 - name: create a copy from master
   command: >
     "pg_basebackup -h {{ postgresql_master }}
@@ -36,13 +36,13 @@
     path: "{{ postgresql_data }}/recovery.conf"
     regexp: ^"{{ item.split('=')[0] }}"
     line: "{{ item }}"
-    create: yes
+    create: 'True'
   with_items:
     - standby_mode = on
     - >
-    primary_conninfo = 'host={{ postgresql_master }}
-     port=5432 user={{ postgresql_replica_user }}
-     password={{ postgresql_replica_password }}'
+      primary_conninfo = 'host={{ postgresql_master }}
+       port=5432 user={{ postgresql_replica_user }}
+       password={{ postgresql_replica_password }}'
     - restore_command = 'cp /var/lib/postgresql/9.5/main/archive/%f %p'
     - trigger_file = '/tmp/postgresql.trigger.5432'
 
